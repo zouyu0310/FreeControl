@@ -327,6 +327,9 @@ namespace FreeControl
             tbxIp.Watermark = I18n.tbxIpPlaceholder;
             tbxPort.Watermark = I18n.tbxPortPlaceholder;
             #endregion
+
+            // 应用视觉主题（高级配色 / 圆角），确保初始启动即生效
+            UpdateStyle(_Setting.DarkMode);
         }
 
         /// <summary>
@@ -663,71 +666,91 @@ namespace FreeControl
 
         void UpdateStyle(bool isDark)
         {
-            Color tabBackColor;
-            Color foreColor;
+            // 语义色板：背景 / 卡片 / 边框 / 主文字 / 次文字 / 强调色（浅深各一套）
+            Color bg, surface, surface2, border, text, text2, accent, accentHover, tabBack;
             UIStyle curStyle;
             if (isDark)
             {
-                tabBackColor = Color.FromArgb(24, 24, 24);
-                foreColor = Color.FromArgb(192, 192, 192);
+                bg = Color.FromArgb(18, 20, 25);
+                surface = Color.FromArgb(30, 33, 40);
+                surface2 = Color.FromArgb(38, 42, 51);
+                border = Color.FromArgb(52, 57, 69);
+                text = Color.FromArgb(228, 232, 240);
+                text2 = Color.FromArgb(150, 158, 173);
+                accent = Color.FromArgb(79, 155, 255);
+                accentHover = Color.FromArgb(108, 171, 255);
+                tabBack = Color.FromArgb(24, 26, 32);
                 curStyle = UIStyle.Black;
-                UIStyles.SetStyle(curStyle);
-                navTab.MenuStyle = UIMenuStyle.Black;
-
-                tabHome.ImageIndex = 1;
-                tabSetting.ImageIndex = 3;
-
-                btnStart.FillHoverColor = Color.FromArgb(20, 54, 94);
-                btnStart.FillDisableColor = tabBackColor;
-                btnStart.FillPressColor = Color.FromArgb(20, 54, 94);
-                btnStart.ForeHoverColor = Color.White;
-                btnStart.ForeDisableColor = Color.White;
-                btnStart.ForePressColor = Color.White;
             }
             else
             {
-                tabBackColor = Color.FromArgb(242, 242, 244);
-                foreColor = Color.FromArgb(48, 48, 48);
+                bg = Color.FromArgb(244, 246, 251);
+                surface = Color.FromArgb(255, 255, 255);
+                surface2 = Color.FromArgb(247, 249, 252);
+                border = Color.FromArgb(228, 232, 240);
+                text = Color.FromArgb(31, 36, 48);
+                text2 = Color.FromArgb(107, 114, 128);
+                accent = Color.FromArgb(59, 130, 246);
+                accentHover = Color.FromArgb(47, 111, 224);
+                tabBack = Color.FromArgb(242, 242, 244);
                 curStyle = UIStyle.Gray;
-                UIStyles.SetStyle(curStyle);
-                navTab.MenuStyle = UIMenuStyle.White;
-
-                tabHome.ImageIndex = 0;
-                tabSetting.ImageIndex = 2;
-
-                navTab.TabSelectedColor = tabBackColor;
-                navTab.TabSelectedForeColor = Color.FromArgb(140, 140, 140);
-                navTab.TabSelectedHighColor = Color.FromArgb(140, 140, 140);
-                navTab.TabBackColor = Color.FromArgb(222, 222, 222);
             }
 
-            tabHome.BackColor = tabBackColor;
-            tabSetting.BackColor = tabBackColor;
+            UIStyles.SetStyle(curStyle);
+            navTab.MenuStyle = isDark ? UIMenuStyle.Black : UIMenuStyle.White;
+            navTab.TabBackColor = tabBack;
+            navTab.TabSelectedColor = surface;
+            navTab.TabSelectedForeColor = accent;
+            navTab.TabSelectedHighColor = accent;
+            navTab.TabUnSelectedForeColor = text2;
 
+            tabHome.BackColor = surface;
+            tabSetting.BackColor = surface;
+            this.BackColor = bg;
 
-            tbxPort.FillColor = tabBackColor;
-            tbxIp.FillColor = tabBackColor;
+            const int rField = 9, rBtn = 11, rGroup = 12, rCbx = 6;
 
-            comboPx.FillColor = tabBackColor;
-            comboMbps.FillColor = tabBackColor;
-            comboMaxFPS.FillColor = tabBackColor;
-            comboIp.FillColor = tabBackColor;
+            // 输入框 / 下拉 / 数字框
+            tbxPort.Radius = rField; tbxPort.FillColor = surface; tbxPort.ForeColor = text; tbxPort.RectColor = border;
+            tbxIp.Radius = rField; tbxIp.FillColor = surface; tbxIp.ForeColor = text; tbxIp.RectColor = border;
+            comboPx.Radius = rField; comboPx.FillColor = surface; comboPx.ForeColor = text; comboPx.RectColor = border;
+            comboMbps.Radius = rField; comboMbps.FillColor = surface; comboMbps.ForeColor = text; comboMbps.RectColor = border;
+            comboMaxFPS.Radius = rField; comboMaxFPS.FillColor = surface; comboMaxFPS.ForeColor = text; comboMaxFPS.RectColor = border;
+            comboIp.Radius = rField; comboIp.FillColor = surface; comboIp.ForeColor = text; comboIp.RectColor = border;
+            updownWidth.Radius = rField; updownWidth.FillColor = surface; updownWidth.ForeColor = text; updownWidth.RectColor = border;
+            updownHeight.Radius = rField; updownHeight.FillColor = surface; updownHeight.ForeColor = text; updownHeight.RectColor = border;
 
+            // 复选框
+            foreach (var cbx in new[] { cbxUseWireless, cbxAudioEnabled, cbxControllerEnabled, cbxShowTouches, cbxTopMost, cbxReadOnly, cbxFullScreen, cbxHideBorder, cbxUseLog, cbxKeepAwake, cbxCloseScreen })
+            { cbx.Radius = rCbx; cbx.ForeColor = text; }
 
+            // 分组框
+            uiGroupBox1.Radius = rGroup; uiGroupBox1.FillColor = surface2; uiGroupBox1.RectColor = border; uiGroupBox1.ForeColor = text; uiGroupBox1.TitleColor = text2;
+            cbxOtherSetting.Radius = rGroup; cbxOtherSetting.FillColor = surface2; cbxOtherSetting.RectColor = border; cbxOtherSetting.ForeColor = text; cbxOtherSetting.TitleColor = text2;
 
-            tbxPort.ForeColor = foreColor;
-            tbxIp.ForeColor = foreColor;
-            comboPx.ForeColor = foreColor;
-            comboMbps.ForeColor = foreColor;
-            comboMaxFPS.ForeColor = foreColor;
-            comboIp.ForeColor = foreColor;
+            // 快捷键组
+            rbtnShortcuts.Radius = rField; rbtnShortcuts.ForeColor = text;
 
+            // 标签（说明文字用次级色）
+            foreach (var lbl in new[] { uiLabel1, uiLabel2, uiLabel3, uiLabel4, uiLabel5, uiLabel6, uiLabel7, lbDarkMode, lbAllShortcut })
+            { lbl.ForeColor = text2; }
 
-            BackColor = Color.FromArgb(140, 140, 140);
-            btnClose.Style = UIStyle.Gray;
-            btnClose.ForeColor = Color.FromArgb(250, 240, 230);
-            btnMini.Style = UIStyle.Gray;
-            btnMini.ForeColor = Color.FromArgb(250, 240, 230);
+            // 链接（统一用强调色，提升精致感）
+            foreach (var lnk in new[] { linkIME, linkIssues, linkSetPort, linkEnabledADB, linkLang })
+            { lnk.ForeColor = accent; }
+
+            // 启动按钮（强调色实心填充）
+            btnStart.FillColor = accent;
+            btnStart.FillHoverColor = accentHover;
+            btnStart.FillPressColor = accentHover;
+            btnStart.ForeColor = Color.White;
+            btnStart.ForeHoverColor = Color.White;
+            btnStart.ForePressColor = Color.White;
+            btnStart.Radius = rBtn;
+
+            // 标题栏按钮
+            btnClose.Style = curStyle; btnClose.ForeColor = text2; btnClose.Radius = rBtn;
+            btnMini.Style = curStyle; btnMini.ForeColor = text2; btnMini.Radius = rBtn;
         }
 
         private void ComboMaxFPS_SelectedValueChanged(object sender, EventArgs e)
