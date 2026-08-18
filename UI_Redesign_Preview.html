@@ -3,182 +3,275 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>FreeControl 视觉焕新预览</title>
+<title>Free Control · 现代极简预览</title>
 <style>
   :root{
-    /* 强调色（品牌主色）—— 统一一处，浅深共用 */
-    --accent: #3b82f6;
-    --accent-hover: #2f6fe0;
-    --accent-soft: rgba(59,130,246,.12);
-    /* 浅色主题 */
-    --bg: #f4f6fb;
+    /* 单一蓝色强调，克制使用 */
+    --accent: #2563eb;
+    --accent-hover: #1d4ed8;
+    --accent-press: #1e40af;
+    --accent-soft: rgba(37,99,235,.10);
+    --accent-ring: rgba(37,99,235,.18);
+    /* 浅色（近 Notion / Linear 的干净中性色） */
+    --bg: #f6f7f8;
     --surface: #ffffff;
-    --surface-2: #f7f9fc;
-    --border: #e6e9f0;
-    --text: #1f2430;
-    --text-2: #6b7280;
+    --surface-2: #f4f5f6;
+    --hover: #eef0f2;
+    --border: #e6e7e9;
+    --border-strong: #d6d8db;
+    --text: #17181a;
+    --text-2: #6b6f76;
+    --text-3: #9aa0a8;
     --radius: 12px;
-    --radius-sm: 9px;
-    --shadow: 0 6px 20px rgba(20,30,60,.06);
+    --radius-sm: 8px;
+    --radius-xs: 6px;
+    --shadow: 0 1px 2px rgba(16,18,20,.04), 0 10px 30px rgba(16,18,20,.06);
   }
   body.dark{
-    --accent: #4f9bff;
-    --accent-hover: #6aabff;
-    --accent-soft: rgba(79,155,255,.16);
-    --bg: #121419;
-    --surface: #1e2128;
-    --surface-2: #262a33;
-    --border: #343943;
-    --text: #e4e8f0;
-    --text-2: #969ead;
-    --shadow: 0 8px 24px rgba(0,0,0,.35);
+    --accent: #3b82f6;
+    --accent-hover: #60a5fa;
+    --accent-press: #2563eb;
+    --accent-soft: rgba(59,130,246,.16);
+    --accent-ring: rgba(59,130,246,.24);
+    --bg: #0f1011;
+    --surface: #17181a;
+    --surface-2: #1e1f22;
+    --hover: #232427;
+    --border: #26282b;
+    --border-strong: #33363a;
+    --text: #e8e9ea;
+    --text-2: #9aa0a6;
+    --text-3: #6b7076;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 14px 40px rgba(0,0,0,.45);
   }
-  *{box-sizing:border-box;margin:0;padding:0;font-family:"Segoe UI","Microsoft YaHei",system-ui,sans-serif}
-  body{background:var(--bg);color:var(--text);display:flex;justify-content:center;padding:32px 16px;transition:background .25s,color .25s}
-  .window{width:440px;background:var(--surface);border-radius:16px;box-shadow:var(--shadow);overflow:hidden;border:1px solid var(--border)}
-  /* 标题栏 */
-  .titlebar{height:46px;display:flex;align-items:center;padding:0 14px;background:var(--surface-2);border-bottom:1px solid var(--border)}
-  .dots{display:flex;gap:7px;margin-right:10px}
-  .dots i{width:11px;height:11px;border-radius:50%;display:block}
-  .dots .r{background:#ff5f57}.dots .y{background:#febc2e}.dots .g{background:#28c840}
-  .title{font-size:13px;font-weight:600;color:var(--text)}
-  .title .ver{color:var(--text-2);font-weight:400;margin-left:6px}
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:"Inter","Segoe UI","Microsoft YaHei UI","Microsoft YaHei",system-ui,-apple-system,sans-serif;
+    background:var(--bg);color:var(--text);
+    display:flex;justify-content:center;padding:40px 16px;
+    transition:background .25s,color .25s;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  }
+  /* ===== 窗口 ===== */
+  .window{
+    width:460px;background:var(--surface);
+    border-radius:var(--radius);
+    box-shadow:var(--shadow);
+    border:1px solid var(--border);
+    overflow:hidden;
+  }
+  /* ===== 标题栏（干净文字标题） ===== */
+  .titlebar{
+    height:52px;display:flex;align-items:center;gap:10px;
+    padding:0 8px 0 18px;
+    border-bottom:1px solid var(--border);
+  }
+  .appname{font-size:14px;font-weight:600;letter-spacing:.2px}
+  .ver{font-size:11px;font-weight:500;color:var(--text-3);background:var(--surface-2);
+       border:1px solid var(--border);padding:2px 7px;border-radius:999px;margin-left:2px}
   .spacer{flex:1}
-  .tbtn{width:30px;height:30px;border:none;background:transparent;color:var(--text-2);border-radius:8px;cursor:pointer;font-size:15px;display:flex;align-items:center;justify-content:center}
-  .tbtn:hover{background:var(--accent-soft);color:var(--accent)}
-  .theme-toggle{display:flex;align-items:center;gap:6px;font-size:12px;color:var(--text-2);cursor:pointer;padding:5px 9px;border-radius:8px}
-  .theme-toggle:hover{background:var(--accent-soft);color:var(--accent)}
-  /* 标签页 */
-  .tabs{display:flex;gap:4px;padding:14px 16px 0}
-  .tab{padding:9px 18px;border-radius:10px 10px 0 0;font-size:13px;color:var(--text-2);cursor:pointer;border:1px solid transparent;border-bottom:none}
-  .tab.active{color:var(--accent);background:var(--surface);border-color:var(--border);font-weight:600}
-  .body{padding:18px 18px 22px;border-top:1px solid var(--border);background:var(--surface);min-height:430px}
-  /* 卡片 */
-  .card{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius);padding:16px;margin-bottom:14px}
-  .card h3{font-size:13px;font-weight:600;margin-bottom:13px;display:flex;align-items:center;gap:8px;color:var(--text)}
-  .card h3 .ic{width:18px;height:18px;color:var(--accent)}
-  .row{display:flex;align-items:center;margin-bottom:12px;gap:10px}
-  .row:last-child{margin-bottom:0}
-  .label{font-size:12.5px;color:var(--text-2);width:74px;flex-shrink:0}
-  .field{flex:1;height:36px;border:1px solid var(--border);background:var(--surface);border-radius:var(--radius-sm);padding:0 12px;color:var(--text);font-size:13px;display:flex;align-items:center}
-  .field.select{justify-content:space-between;color:var(--text-2)}
+  .iconbtn{
+    width:32px;height:32px;border:none;background:transparent;color:var(--text-2);
+    border-radius:var(--radius-sm);cursor:pointer;font-size:14px;
+    display:flex;align-items:center;justify-content:center;transition:.15s;
+  }
+  .iconbtn:hover{background:var(--hover);color:var(--text)}
+  .iconbtn.danger:hover{background:rgba(234,67,53,.12);color:#ea4335}
+  /* ===== 标签页（下划线极简风） ===== */
+  .tabs{display:flex;gap:26px;padding:0 20px;border-bottom:1px solid var(--border)}
+  .tab{
+    padding:13px 2px;font-size:13.5px;color:var(--text-2);cursor:pointer;
+    border-bottom:2px solid transparent;margin-bottom:-1px;transition:.15s;font-weight:500;
+  }
+  .tab:hover{color:var(--text)}
+  .tab.active{color:var(--text);border-bottom-color:var(--accent);font-weight:600}
+  /* ===== 内容 ===== */
+  .body{padding:20px 20px 24px;min-height:520px}
+  .section{margin-bottom:22px}
+  .section:last-child{margin-bottom:0}
+  .section-title{
+    font-size:11.5px;font-weight:600;color:var(--text-3);
+    text-transform:uppercase;letter-spacing:.6px;margin:0 2px 12px;
+    display:flex;align-items:center;gap:8px;
+  }
+  .card{
+    background:var(--surface);border:1px solid var(--border);
+    border-radius:var(--radius);padding:4px 16px;
+  }
+  .row{
+    display:flex;align-items:center;gap:12px;
+    padding:12px 0;border-bottom:1px solid var(--border);
+  }
+  .row:last-child{border-bottom:none}
+  .label{font-size:13px;color:var(--text-2);width:78px;flex-shrink:0}
+  .value{font-size:13px;color:var(--text);font-weight:500}
+  .field{
+    flex:1;height:36px;border:1px solid var(--border);background:var(--surface);
+    border-radius:var(--radius-sm);padding:0 12px;color:var(--text);font-size:13px;
+    display:flex;align-items:center;transition:.15s;cursor:text;
+  }
+  .field:hover{border-color:var(--border-strong)}
+  .field.focus{border-color:var(--accent);box-shadow:0 0 0 3px var(--accent-ring)}
+  .field .caret{color:var(--text-3)}
+  .field.select{justify-content:space-between;color:var(--text);cursor:pointer}
+  .field .ph{color:var(--text-3)}
+  /* 分段选择器（连接模式） */
+  .seg{display:flex;background:var(--surface-2);border:1px solid var(--border);border-radius:var(--radius-sm);padding:3px;gap:2px}
+  .seg span{padding:6px 14px;font-size:12.5px;color:var(--text-2);border-radius:var(--radius-xs);cursor:pointer;font-weight:500}
+  .seg span.on{background:var(--surface);color:var(--text);box-shadow:0 1px 2px rgba(0,0,0,.06);font-weight:600}
   /* 开关 */
-  .switch{position:relative;width:42px;height:24px;background:var(--border);border-radius:14px;cursor:pointer;transition:.2s}
+  .switch{position:relative;width:40px;height:23px;background:var(--border-strong);border-radius:999px;cursor:pointer;transition:.2s;flex-shrink:0}
   .switch.on{background:var(--accent)}
-  .switch::after{content:"";position:absolute;width:18px;height:18px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
-  .switch.on::after{left:21px}
+  .switch::after{content:"";position:absolute;width:17px;height:17px;background:#fff;border-radius:50%;top:3px;left:3px;transition:.2s;box-shadow:0 1px 3px rgba(0,0,0,.25)}
+  .switch.on::after{left:20px}
   /* 链接 */
-  .links{display:flex;flex-direction:column;gap:9px;margin-top:4px}
-  .link{display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--accent);text-decoration:none;cursor:pointer}
-  .link .ic{width:15px;height:15px;opacity:.85}
-  .link:hover{text-decoration:underline}
+  .links{display:flex;flex-direction:column}
+  .link{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);padding:11px 2px;border-bottom:1px solid var(--border);cursor:pointer;text-decoration:none}
+  .link:last-child{border-bottom:none}
+  .link .ic{width:16px;height:16px;color:var(--text-3);transition:.15s}
+  .link:hover .ic{color:var(--accent)}
+  .link .arrow{margin-left:auto;color:var(--text-3);font-size:13px;transition:.15s}
+  .link:hover .arrow{color:var(--accent);transform:translateX(2px)}
   /* 启动按钮 */
-  .start{width:100%;height:46px;background:var(--accent);color:#fff;border:none;border-radius:var(--radius);font-size:15px;font-weight:600;cursor:pointer;margin-top:4px;display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s}
+  .start{
+    width:100%;height:44px;background:var(--accent);color:#fff;border:none;
+    border-radius:var(--radius-sm);font-size:14px;font-weight:600;cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:8px;transition:.15s;
+    box-shadow:0 1px 2px rgba(37,99,235,.25);
+  }
   .start:hover{background:var(--accent-hover)}
-  .start:active{transform:translateY(1px)}
-  /* 分组勾选 */
-  .check{display:flex;align-items:center;gap:10px;font-size:12.5px;color:var(--text);padding:7px 0}
-  .box{width:18px;height:18px;border:1.5px solid var(--border);border-radius:5px;flex-shrink:0;background:var(--surface)}
-  .check.on .box{background:var(--accent);border-color:var(--accent);display:flex;align-items:center;justify-content:center}
+  .start:active{background:var(--accent-press);transform:translateY(1px)}
+  /* 复选框 */
+  .col2{display:grid;grid-template-columns:1fr 1fr;gap:2px 20px}
+  .check{display:flex;align-items:center;gap:10px;font-size:13px;color:var(--text);padding:9px 2px;cursor:pointer}
+  .box{width:17px;height:17px;border:1.5px solid var(--border-strong);border-radius:5px;flex-shrink:0;background:var(--surface);transition:.15s;display:flex;align-items:center;justify-content:center}
+  .check:hover .box{border-color:var(--accent)}
+  .check.on .box{background:var(--accent);border-color:var(--accent)}
   .check.on .box::after{content:"";width:9px;height:5px;border-left:2px solid #fff;border-bottom:2px solid #fff;transform:rotate(-45deg) translateY(-1px)}
-  .col2{display:grid;grid-template-columns:1fr 1fr;gap:4px 18px}
-  .hint{font-size:11.5px;color:var(--text-2);line-height:1.6;margin-top:8px}
+  .hint{font-size:11.5px;color:var(--text-3);line-height:1.7;margin-top:16px;text-align:center}
+  code{font-family:ui-monospace,"Cascadia Code",Consolas,monospace;font-size:11px;background:var(--surface-2);border:1px solid var(--border);padding:1px 5px;border-radius:5px}
   svg{fill:currentColor}
+  /* 主题切换按钮（右上角预览用） */
+  .togglebar{display:flex;justify-content:center;margin-bottom:18px}
+  .togglebar button{
+    font-family:inherit;font-size:12.5px;padding:7px 16px;border-radius:999px;cursor:pointer;
+    border:1px solid var(--border);background:var(--surface);color:var(--text-2);transition:.15s;
+  }
+  .togglebar button:hover{color:var(--text);border-color:var(--border-strong)}
 </style>
 </head>
 <body>
-  <div class="window">
-    <div class="titlebar">
-      <div class="dots"><i class="r"></i><i class="y"></i><i class="g"></i></div>
-      <div class="title">Free Control<span class="ver">v1.7.3</span></div>
-      <div class="spacer"></div>
-      <div class="theme-toggle" onclick="document.body.classList.toggle('dark')">
-        <svg width="15" height="15" viewBox="0 0 24 24"><path d="M12 3a9 9 0 109 9c0-.46-.04-.92-.1-1.36a5.39 5.39 0 01-4.4 4.4A9 9 0 0012 3z"/></svg>
-        浅/深
-      </div>
-      <button class="tbtn" title="语言">中/EN</button>
-      <button class="tbtn" title="最小化">—</button>
-      <button class="tbtn" title="关闭">✕</button>
+  <div>
+    <div class="togglebar">
+      <button onclick="document.body.classList.toggle('dark')">切换 浅色 / 深色</button>
     </div>
 
-    <div class="tabs">
-      <div class="tab active">主页</div>
-      <div class="tab">设置</div>
-    </div>
-
-    <div class="body">
-      <!-- 主页 -->
-      <div class="card">
-        <h3><svg class="ic" viewBox="0 0 24 24"><path d="M17 1H7a2 2 0 00-2 2v18a2 2 0 002 2h10a2 2 0 002-2V3a2 2 0 00-2-2zm0 18H7V5h10z"/></svg>设备连接</h3>
-        <div class="row">
-          <span class="label">连接模式</span>
-          <div class="field select">USB<span style="color:var(--accent)">●</span></div>
-          <div class="switch on" style="margin-left:auto"></div>
-        </div>
-        <div class="row">
-          <span class="label">IP 地址</span>
-          <div class="field">192.168.1.36</div>
-        </div>
-        <div class="row">
-          <span class="label">端口</span>
-          <div class="field">5555</div>
-        </div>
-        <div class="row">
-          <span class="label">历史 IP</span>
-          <div class="field select">选择历史记录<svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>
-        </div>
+    <div class="window">
+      <!-- 标题栏：干净文字标题 -->
+      <div class="titlebar">
+        <span class="appname">Free Control</span>
+        <span class="ver">v1.7.3</span>
+        <div class="spacer"></div>
+        <button class="iconbtn" title="语言">中/EN</button>
+        <button class="iconbtn" title="最小化">—</button>
+        <button class="iconbtn danger" title="关闭">✕</button>
       </div>
 
-      <div class="card">
-        <h3><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-6h2zm0-8h-2V7h2z"/></svg>帮助</h3>
-        <div class="links">
-          <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M3.9 12a4 4 0 014-4h4V6H7.9A6 6 0 1014 18h-1v-2h1a4 4 0 010-4h-4a4 4 0 01-4-4z"/></svg>如何开启 USB 调试模式</div>
-          <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M3.9 12a4 4 0 014-4h4V6H7.9A6 6 0 1014 18h-1v-2h1a4 4 0 010-4h-4a4 4 0 01-4-4z"/></svg>设置无线调试端口</div>
-          <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>反馈问题 / 输入法说明</div>
-        </div>
+      <!-- 标签页 -->
+      <div class="tabs">
+        <div class="tab active">主页</div>
+        <div class="tab">设置</div>
       </div>
 
-      <button class="start">
-        <svg width="18" height="18" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
-        启动控制
-      </button>
-
-      <!-- 设置页 -->
-      <div class="card">
-        <h3><svg class="ic" viewBox="0 0 24 24"><path d="M4 4h16v12H5.2L4 17.2zm2 4v2h2V8zm4 0v2h8V8zm0 4v2h8v-2H10z"/></svg>画面参数</h3>
-        <div class="row"><span class="label">分辨率</span><div class="field select">原始分辨率<svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
-        <div class="row"><span class="label">码率</span><div class="field select">8 Mbps<svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
-        <div class="row"><span class="label">最大帧率</span><div class="field select">60 FPS<svg width="12" height="12" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
-      </div>
-
-      <div class="card">
-        <h3><svg class="ic" viewBox="0 0 24 24"><path d="M12 2l2.4 7.4H22l-6 4.6 2.3 7.4-6.3-4.6L5.7 21.4 8 14 2 9.4h7.6z"/></svg>控制选项</h3>
-        <div class="col2">
-          <div class="check on"><div class="box"></div>显示触摸点</div>
-          <div class="check"><div class="box"></div>窗口置顶</div>
-          <div class="check"><div class="box"></div>全屏显示</div>
-          <div class="check"><div class="box"></div>隐藏边框</div>
-          <div class="check on"><div class="box"></div>启用控制器</div>
-          <div class="check"><div class="box"></div>只读镜像</div>
+      <div class="body">
+        <!-- 主页：设备连接 -->
+        <div class="section">
+          <div class="section-title">设备连接</div>
+          <div class="card">
+            <div class="row">
+              <span class="label">连接模式</span>
+              <div class="seg"><span class="on">USB</span><span>无线</span></div>
+              <div class="spacer"></div>
+              <div class="switch on"></div>
+            </div>
+            <div class="row">
+              <span class="label">IP 地址</span>
+              <div class="field focus">192.168.1.36</div>
+            </div>
+            <div class="row">
+              <span class="label">端口</span>
+              <div class="field">5555</div>
+            </div>
+            <div class="row">
+              <span class="label">历史 IP</span>
+              <div class="field select"><span class="ph">选择历史记录</span><svg class="caret" width="13" height="13" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div>
+            </div>
+          </div>
         </div>
-      </div>
 
-      <div class="card">
-        <h3><svg class="ic" viewBox="0 0 24 24"><path d="M12 8a4 4 0 100 8 4 4 0 000-8zm9 4l-2 1.5.8 2.5-2.3.8-1 2.2-2.3-.8L12 21l-1.2-1.8-2.3.8-1-2.2L5.2 16l.8-2.5L4 12l2-1.5L5.2 8l2.3-.8L8.5 5l2.3.8L12 3l1.2 1.8 2.3-.8 1 2.2 2.3.8-.8 2.5z"/></svg>高级</h3>
-        <div class="col2">
-          <div class="check on"><div class="box"></div>音频转发</div>
-          <div class="check"><div class="box"></div>保持唤醒</div>
-          <div class="check"><div class="box"></div>关闭屏幕</div>
-          <div class="check"><div class="box"></div>启用日志</div>
+        <!-- 主页：帮助 -->
+        <div class="section">
+          <div class="section-title">帮助</div>
+          <div class="card">
+            <div class="links">
+              <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M12 2a10 10 0 100 20 10 10 0 000-20zm1 15h-2v-2h2zm0-4h-2V7h2z"/></svg>如何开启 USB 调试<span class="arrow">›</span></div>
+              <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M12 1a11 11 0 00-7.8 18.8l1.4-1.4A9 9 0 1112 21v2zm0 5a4 4 0 110 8 4 4 0 010-8z"/></svg>设置无线调试端口<span class="arrow">›</span></div>
+              <div class="link"><svg class="ic" viewBox="0 0 24 24"><path d="M20 4H4a2 2 0 00-2 2v12a2 2 0 002 2h16a2 2 0 002-2V6a2 2 0 00-2-2zm0 4l-8 5-8-5V6l8 5 8-5z"/></svg>反馈问题 / 输入法<span class="arrow">›</span></div>
+            </div>
+          </div>
         </div>
-        <div class="row" style="margin-top:12px">
-          <span class="label">深色模式</span>
-          <div class="spacer" style="flex:1"></div>
-          <div class="switch on"></div>
-        </div>
-      </div>
 
-      <p class="hint">配置保存在 <code>%AppData%\FreeControl\config.json</code> · 点击右上角「浅/深」可预览两种主题</p>
+        <button class="start">
+          <svg width="16" height="16" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"/></svg>
+          启动控制
+        </button>
+
+        <!-- 设置：画面参数 -->
+        <div class="section" style="margin-top:22px">
+          <div class="section-title">画面参数</div>
+          <div class="card">
+            <div class="row"><span class="label">分辨率</span><div class="field select"><span>原始分辨率</span><svg class="caret" width="13" height="13" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
+            <div class="row"><span class="label">码率</span><div class="field select"><span>8 Mbps</span><svg class="caret" width="13" height="13" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
+            <div class="row"><span class="label">最大帧率</span><div class="field select"><span>60 FPS</span><svg class="caret" width="13" height="13" viewBox="0 0 24 24"><path d="M7 10l5 5 5-5z"/></svg></div></div>
+          </div>
+        </div>
+
+        <!-- 设置：控制选项 -->
+        <div class="section">
+          <div class="section-title">控制选项</div>
+          <div class="card">
+            <div class="col2" style="padding:6px 0">
+              <div class="check on"><div class="box"></div>显示触摸点</div>
+              <div class="check"><div class="box"></div>窗口置顶</div>
+              <div class="check"><div class="box"></div>全屏显示</div>
+              <div class="check"><div class="box"></div>隐藏边框</div>
+              <div class="check on"><div class="box"></div>启用控制器</div>
+              <div class="check"><div class="box"></div>只读镜像</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 设置：高级 -->
+        <div class="section">
+          <div class="section-title">高级</div>
+          <div class="card">
+            <div class="col2" style="padding:6px 0 0">
+              <div class="check on"><div class="box"></div>音频转发</div>
+              <div class="check"><div class="box"></div>保持唤醒</div>
+              <div class="check"><div class="box"></div>关闭屏幕</div>
+              <div class="check"><div class="box"></div>启用日志</div>
+            </div>
+            <div class="row" style="border-top:1px solid var(--border);margin-top:6px">
+              <span class="label">深色模式</span>
+              <div class="spacer"></div>
+              <div class="switch on"></div>
+            </div>
+          </div>
+        </div>
+
+        <p class="hint">配置保存于 <code>%AppData%\FreeControl\config.json</code><br>此预览用于确认视觉方向，确认后将一比一同步进 WinForms 代码</p>
+      </div>
     </div>
   </div>
 </body>
