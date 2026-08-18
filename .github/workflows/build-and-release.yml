@@ -15,20 +15,35 @@ jobs:
       - name: Setup MSBuild
         uses: microsoft/setup-msbuild@v2
 
-      - name: Restore NuGet Packages
+      - name: Setup NuGet
+        uses: nuget/setup-nuget@v2
+
+      # nuget.config contains a local proxy (127.0.0.1:7897) for the developer's machine.
+      # GitHub-hosted runners have no such proxy; keep the file clean for CI.
+      - name: Strip local proxy from nuget.config
+        shell: pwsh
+        run: |
+          $xml = [xml](Get-Content nuget.config)
+          if ($xml.configuration.config) { $xml.configuration.config.RemoveAll() }
+          $xml.Save("nuget.config")
+
+      - name: Restore NuGet packages
         run: nuget restore FreeControl.sln
 
-      - name: Build
+      # Costura.Fody embeds all dependencies into a single FreeControl.exe at build time.
+      - name: Build single-file exe
+        shell: pwsh
         run: |
           msbuild FreeControl.sln /p:Configuration=Release /p:Platform="Any CPU" /p:OutputPath="../output"
-          $filePath = "output/Freecontrol.exe"
-          $sha256Hash = (Get-FileHash -Algorithm SHA256 -Path $filePath).Hash.ToLower()
-          "``sha256: $sha256Hash``" > "output/SHA256"
+          $exe = "output/FreeControl.exe"
+          if (-not (Test-Path $exe)) { throw "Build output not found: $exe" }
+          $sha = (Get-FileHash -Algorithm SHA256 -Path $exe).Hash.ToLower()
+          "sha256: $sha" | Out-File -FilePath "output/SHA256.txt" -Encoding utf8
 
-      - name: Release
+      - name: Upload exe as draft release
         uses: softprops/action-gh-release@v2
         with:
-          body_path: output/SHA256
+          body_path: output/SHA256.txt
           files: output/FreeControl.exe
           name: ${{ github.ref_name }}
           draft: true
