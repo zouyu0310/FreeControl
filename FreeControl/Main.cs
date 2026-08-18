@@ -276,21 +276,14 @@ namespace FreeControl
 
             #region 设置标题和图标
             Text = Info.NameVersion;
-            ledTitle.Text = Info.NameVersion;
-            ledTitle.CharCount = 19;
+            ledTitle.Text = Info.Name2;
             Icon = Properties.Resources.pcm;
             #endregion
 
             #region 设置主题颜色
-            UIStyles.SetStyle(UIStyle.Gray);
-            // 设置默认导航条颜色
-            navTab.TabSelectedForeColor = Color.FromArgb(140, 140, 140);
-            navTab.TabSelectedHighColor = Color.FromArgb(140, 140, 140);
-            // 设置默认导航条图标
+            // 导航图标索引（其余配色统一在 UpdateStyle 中按语义色板处理）
             tabHome.ImageIndex = 0;
             tabSetting.ImageIndex = 2;
-            this.BackColor = Color.FromArgb(140, 140, 140);
-            navTab.TabBackColor = Color.FromArgb(222, 222, 222);
             #endregion
 
             #region 切换tab事件
@@ -666,37 +659,50 @@ namespace FreeControl
 
         void UpdateStyle(bool isDark)
         {
-            // 语义色板：背景 / 卡片 / 边框 / 主文字 / 次文字 / 强调色（浅深各一套）
-            Color bg, surface, surface2, border, text, text2, accent, accentHover, tabBack;
+            // 语义色板：背景 / 卡片 / 边框 / 主文字 / 次文字 / 强调色 / 按下 / 导航底 / 悬浮（浅深各一套）
+            Color bg, surface, surface2, border, text, text2, accent, accentHover, accentPress, tabBack, hover;
             UIStyle curStyle;
             if (isDark)
             {
-                bg = Color.FromArgb(18, 20, 25);
-                surface = Color.FromArgb(30, 33, 40);
-                surface2 = Color.FromArgb(38, 42, 51);
-                border = Color.FromArgb(52, 57, 69);
-                text = Color.FromArgb(228, 232, 240);
-                text2 = Color.FromArgb(150, 158, 173);
-                accent = Color.FromArgb(79, 155, 255);
-                accentHover = Color.FromArgb(108, 171, 255);
-                tabBack = Color.FromArgb(24, 26, 32);
+                bg = Color.FromArgb(13, 14, 15);
+                surface = Color.FromArgb(23, 24, 26);
+                surface2 = Color.FromArgb(30, 31, 34);
+                border = Color.FromArgb(38, 40, 43);
+                text = Color.FromArgb(232, 233, 234);
+                text2 = Color.FromArgb(154, 160, 166);
+                accent = Color.FromArgb(59, 130, 246);
+                accentHover = Color.FromArgb(96, 165, 250);
+                accentPress = Color.FromArgb(37, 99, 235);
+                tabBack = Color.FromArgb(17, 18, 20);
+                hover = Color.FromArgb(35, 36, 39);
                 curStyle = UIStyle.Black;
             }
             else
             {
-                bg = Color.FromArgb(244, 246, 251);
+                bg = Color.FromArgb(246, 247, 248);
                 surface = Color.FromArgb(255, 255, 255);
-                surface2 = Color.FromArgb(247, 249, 252);
-                border = Color.FromArgb(228, 232, 240);
-                text = Color.FromArgb(31, 36, 48);
-                text2 = Color.FromArgb(107, 114, 128);
-                accent = Color.FromArgb(59, 130, 246);
-                accentHover = Color.FromArgb(47, 111, 224);
-                tabBack = Color.FromArgb(242, 242, 244);
-                curStyle = UIStyle.Gray;
+                surface2 = Color.FromArgb(244, 245, 246);
+                border = Color.FromArgb(230, 231, 233);
+                text = Color.FromArgb(23, 24, 26);
+                text2 = Color.FromArgb(107, 111, 118);
+                accent = Color.FromArgb(37, 99, 235);
+                accentHover = Color.FromArgb(29, 78, 216);
+                accentPress = Color.FromArgb(30, 64, 175);
+                tabBack = Color.FromArgb(240, 241, 243);
+                hover = Color.FromArgb(238, 240, 242);
+                curStyle = UIStyle.White;
             }
 
+            // 窗口外观：圆角 + 主题边框（ShowShadow 已在 Designer 开启）
             UIStyles.SetStyle(curStyle);
+            this.ShowRadius = true;
+            this.RectColor = border;
+            this.BackColor = bg;
+
+            // 干净文字标题：用主文字色（现代极简，不用强调色）
+            ledTitle.ForeColor = text;
+
+            // 导航标签
             navTab.MenuStyle = isDark ? UIMenuStyle.Black : UIMenuStyle.White;
             navTab.TabBackColor = tabBack;
             navTab.TabSelectedColor = surface;
@@ -706,51 +712,57 @@ namespace FreeControl
 
             tabHome.BackColor = surface;
             tabSetting.BackColor = surface;
-            this.BackColor = bg;
 
             const int rField = 9, rBtn = 11, rGroup = 12, rCbx = 6;
 
-            // 输入框 / 下拉 / 数字框
-            tbxPort.Radius = rField; tbxPort.FillColor = surface; tbxPort.ForeColor = text; tbxPort.RectColor = border;
-            tbxIp.Radius = rField; tbxIp.FillColor = surface; tbxIp.ForeColor = text; tbxIp.RectColor = border;
-            comboPx.Radius = rField; comboPx.FillColor = surface; comboPx.ForeColor = text; comboPx.RectColor = border;
-            comboMbps.Radius = rField; comboMbps.FillColor = surface; comboMbps.ForeColor = text; comboMbps.RectColor = border;
-            comboMaxFPS.Radius = rField; comboMaxFPS.FillColor = surface; comboMaxFPS.ForeColor = text; comboMaxFPS.RectColor = border;
-            comboIp.Radius = rField; comboIp.FillColor = surface; comboIp.ForeColor = text; comboIp.RectColor = border;
-            updownWidth.Radius = rField; updownWidth.FillColor = surface; updownWidth.ForeColor = text; updownWidth.RectColor = border;
-            updownHeight.Radius = rField; updownHeight.FillColor = surface; updownHeight.ForeColor = text; updownHeight.RectColor = border;
+            // 输入框 / 下拉 / 数字框（逐个赋值：这些控件继承 UIPanel 而非 UIControl，不能混装数组）
+            tbxPort.Radius = rField; tbxPort.FillColor = surface; tbxPort.ForeColor = text; tbxPort.RectColor = border; tbxPort.RectDisableColor = border;
+            tbxIp.Radius = rField; tbxIp.FillColor = surface; tbxIp.ForeColor = text; tbxIp.RectColor = border; tbxIp.RectDisableColor = border;
+            comboPx.Radius = rField; comboPx.FillColor = surface; comboPx.ForeColor = text; comboPx.RectColor = border; comboPx.RectDisableColor = border;
+            comboMbps.Radius = rField; comboMbps.FillColor = surface; comboMbps.ForeColor = text; comboMbps.RectColor = border; comboMbps.RectDisableColor = border;
+            comboMaxFPS.Radius = rField; comboMaxFPS.FillColor = surface; comboMaxFPS.ForeColor = text; comboMaxFPS.RectColor = border; comboMaxFPS.RectDisableColor = border;
+            comboIp.Radius = rField; comboIp.FillColor = surface; comboIp.ForeColor = text; comboIp.RectColor = border; comboIp.RectDisableColor = border;
+            updownWidth.Radius = rField; updownWidth.FillColor = surface; updownWidth.ForeColor = text; updownWidth.RectColor = border; updownWidth.RectDisableColor = border;
+            updownHeight.Radius = rField; updownHeight.FillColor = surface; updownHeight.ForeColor = text; updownHeight.RectColor = border; updownHeight.RectDisableColor = border;
 
-            // 复选框
+            // 复选框（UICheckBox 继承 UIControl，var 推断为 UICheckBox）
             foreach (var cbx in new[] { cbxUseWireless, cbxAudioEnabled, cbxControllerEnabled, cbxShowTouches, cbxTopMost, cbxReadOnly, cbxFullScreen, cbxHideBorder, cbxUseLog, cbxKeepAwake, cbxCloseScreen })
-            { cbx.Radius = rCbx; cbx.ForeColor = text; }
+            { cbx.Radius = rCbx; cbx.ForeColor = text; cbx.CheckBoxColor = accent; }
 
             // 分组框
-            uiGroupBox1.Radius = rGroup; uiGroupBox1.FillColor = surface2; uiGroupBox1.RectColor = border; uiGroupBox1.ForeColor = text; uiGroupBox1.TitleColor = text2;
-            cbxOtherSetting.Radius = rGroup; cbxOtherSetting.FillColor = surface2; cbxOtherSetting.RectColor = border; cbxOtherSetting.ForeColor = text; cbxOtherSetting.TitleColor = text2;
+            uiGroupBox1.Radius = rGroup; uiGroupBox1.FillColor = surface2; uiGroupBox1.RectColor = border; uiGroupBox1.ForeColor = text;
+            cbxOtherSetting.Radius = rGroup; cbxOtherSetting.FillColor = surface2; cbxOtherSetting.RectColor = border; cbxOtherSetting.ForeColor = text;
 
             // 快捷键组
-            rbtnShortcuts.Radius = rField; rbtnShortcuts.ForeColor = text;
+            rbtnShortcuts.Radius = rField; rbtnShortcuts.FillColor = surface2; rbtnShortcuts.RectColor = border; rbtnShortcuts.ForeColor = text;
 
-            // 标签（说明文字用次级色）
+            // 说明文字（UILabel 继承 Label，var 推断为 UILabel）
             foreach (var lbl in new[] { uiLabel1, uiLabel2, uiLabel3, uiLabel4, uiLabel5, uiLabel6, uiLabel7, lbDarkMode, lbAllShortcut })
             { lbl.ForeColor = text2; }
 
-            // 链接（统一用强调色，提升精致感）
+            // 链接（UILinkLabel 继承 LinkLabel，var 推断为 UILinkLabel；统一各状态色）
             foreach (var lnk in new[] { linkIME, linkIssues, linkSetPort, linkEnabledADB, linkLang })
-            { lnk.ForeColor = accent; }
+            { lnk.ForeColor = accent; lnk.LinkColor = accent; lnk.ActiveLinkColor = accentHover; lnk.VisitedLinkColor = accent; }
 
-            // 启动按钮（强调色实心填充）
+            // 深色模式开关（用主题强调色）
+            switchDarkMode.ActiveColor = accent;
+            switchDarkMode.InActiveColor = isDark ? text2 : border;
+
+            // 启动按钮（主操作，强调色实心）
             btnStart.FillColor = accent;
             btnStart.FillHoverColor = accentHover;
-            btnStart.FillPressColor = accentHover;
+            btnStart.FillPressColor = accentPress;
             btnStart.ForeColor = Color.White;
             btnStart.ForeHoverColor = Color.White;
             btnStart.ForePressColor = Color.White;
+            btnStart.RectColor = accent;
+            btnStart.RectHoverColor = accentHover;
+            btnStart.RectPressColor = accentPress;
             btnStart.Radius = rBtn;
 
-            // 标题栏按钮
-            btnClose.Style = curStyle; btnClose.ForeColor = text2; btnClose.Radius = rBtn;
-            btnMini.Style = curStyle; btnMini.ForeColor = text2; btnMini.Radius = rBtn;
+            // 标题栏按钮（幽灵按钮：透明底，悬浮微亮）
+            btnClose.FillColor = Color.Transparent; btnClose.FillHoverColor = hover; btnClose.ForeColor = text2; btnClose.ForeHoverColor = text; btnClose.RectColor = Color.Transparent; btnClose.Radius = rBtn;
+            btnMini.FillColor = Color.Transparent; btnMini.FillHoverColor = hover; btnMini.ForeColor = text2; btnMini.ForeHoverColor = text; btnMini.RectColor = Color.Transparent; btnMini.Radius = rBtn;
         }
 
         private void ComboMaxFPS_SelectedValueChanged(object sender, EventArgs e)
@@ -956,7 +968,7 @@ namespace FreeControl
         private void linkSetPort_Click(object sender, EventArgs e)
         {
             if (UIMessageBox.Show(I18n.linkSetPort, I18n.linkSetPortTitle,
-                _Setting.DarkMode ? UIStyle.Black : UIStyle.Gray, UIMessageBoxButtons.OKCancel, false))
+                _Setting.DarkMode ? UIStyle.Black : UIStyle.White, UIMessageBoxButtons.OKCancel, false))
             {
                 var batPath = ScrcpyPath + "SetProt.bat";
                 if (!File.Exists(batPath))

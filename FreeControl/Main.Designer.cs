@@ -30,7 +30,7 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
-            this.ledTitle = new Sunny.UI.UILedDisplay();
+            this.ledTitle = new Sunny.UI.UILabel();
             this.navImgList = new System.Windows.Forms.ImageList(this.components);
             this.navTab = new Sunny.UI.UITabControlMenu();
             this.tabHome = new System.Windows.Forms.TabPage();
@@ -86,13 +86,9 @@
             // ledTitle
             // 
             this.ledTitle.BackColor = System.Drawing.Color.Transparent;
-            this.ledTitle.BorderColor = System.Drawing.Color.Transparent;
-            this.ledTitle.BorderInColor = System.Drawing.Color.Transparent;
-            this.ledTitle.CharCount = 12;
-            this.ledTitle.ForeColor = System.Drawing.Color.Linen;
-            this.ledTitle.IntervalH = 0;
-            this.ledTitle.IntervalV = 0;
-            this.ledTitle.LedBackColor = System.Drawing.Color.Transparent;
+            this.ledTitle.Font = new System.Drawing.Font("Microsoft YaHei UI", 13F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ledTitle.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(23)))), ((int)(((byte)(28)))), ((int)(((byte)(38)))));
+            this.ledTitle.TextAlign = System.Drawing.ContentAlignment.MiddleLeft;
             resources.ApplyResources(this.ledTitle, "ledTitle");
             this.ledTitle.Name = "ledTitle";
             // 
@@ -111,7 +107,7 @@
             this.navTab.Controls.Add(this.tabHome);
             this.navTab.Controls.Add(this.tabSetting);
             this.navTab.DrawMode = System.Windows.Forms.TabDrawMode.OwnerDrawFixed;
-            this.navTab.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
+            this.navTab.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.navTab.ImageList = this.navImgList;
             this.navTab.MenuStyle = Sunny.UI.UIMenuStyle.Custom;
             this.navTab.Multiline = true;
@@ -119,13 +115,13 @@
             this.navTab.SelectedIndex = 0;
             this.navTab.SizeMode = System.Windows.Forms.TabSizeMode.Fixed;
             this.navTab.Style = Sunny.UI.UIStyle.Custom;
-            this.navTab.TabBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(250)))), ((int)(((byte)(250)))), ((int)(((byte)(250)))));
-            this.navTab.TabSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-            this.navTab.TabUnSelectedForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.navTab.TabBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
+            this.navTab.TabSelectedColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+            this.navTab.TabUnSelectedForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(107)))), ((int)(((byte)(111)))), ((int)(((byte)(118)))));
             // 
             // tabHome
             // 
-            this.tabHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
+            this.tabHome.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.tabHome.Controls.Add(this.linkIME);
             this.tabHome.Controls.Add(this.uiLabel7);
             this.tabHome.Controls.Add(this.tbxIp);
@@ -142,22 +138,22 @@
             // 
             // linkIME
             // 
-            this.linkIME.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(155)))), ((int)(((byte)(40)))));
+            this.linkIME.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             resources.ApplyResources(this.linkIME, "linkIME");
-            this.linkIME.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkIME.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIME.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkIME.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkIME.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIME.Name = "linkIME";
             this.linkIME.Style = Sunny.UI.UIStyle.Custom;
             this.linkIME.TabStop = true;
             this.linkIME.UseCompatibleTextRendering = true;
-            this.linkIME.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.linkIME.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIME.Click += new System.EventHandler(this.linkIME_Click);
             // 
             // uiLabel7
             // 
             resources.ApplyResources(this.uiLabel7, "uiLabel7");
-            this.uiLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.uiLabel7.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.uiLabel7.Name = "uiLabel7";
             this.uiLabel7.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel7.StyleCustomMode = true;
@@ -171,8 +167,8 @@
             this.tbxIp.Minimum = -2147483648D;
             this.tbxIp.Name = "tbxIp";
             this.tbxIp.RadiusSides = ((Sunny.UI.UICornerRadiusSides)((Sunny.UI.UICornerRadiusSides.LeftTop | Sunny.UI.UICornerRadiusSides.LeftBottom)));
-            this.tbxIp.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.tbxIp.RectDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.tbxIp.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
+            this.tbxIp.RectDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.tbxIp.RectSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.None;
             this.tbxIp.Style = Sunny.UI.UIStyle.Custom;
             this.tbxIp.StyleCustomMode = true;
@@ -181,16 +177,16 @@
             // 
             // linkIssues
             // 
-            this.linkIssues.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(155)))), ((int)(((byte)(40)))));
+            this.linkIssues.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             resources.ApplyResources(this.linkIssues, "linkIssues");
-            this.linkIssues.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkIssues.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIssues.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkIssues.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkIssues.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIssues.Name = "linkIssues";
             this.linkIssues.Style = Sunny.UI.UIStyle.Custom;
             this.linkIssues.TabStop = true;
             this.linkIssues.UseCompatibleTextRendering = true;
-            this.linkIssues.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.linkIssues.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkIssues.Click += new System.EventHandler(this.linkIssues_Click);
             // 
             // tbxPort
@@ -201,8 +197,8 @@
             this.tbxPort.Maximum = 2147483647D;
             this.tbxPort.Minimum = -2147483648D;
             this.tbxPort.Name = "tbxPort";
-            this.tbxPort.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
-            this.tbxPort.RectDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.tbxPort.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
+            this.tbxPort.RectDisableColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.tbxPort.Style = Sunny.UI.UIStyle.Custom;
             this.tbxPort.StyleCustomMode = true;
             this.tbxPort.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
@@ -210,7 +206,7 @@
             // 
             // cbxUseWireless
             // 
-            this.cbxUseWireless.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.cbxUseWireless.CheckBoxColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.cbxUseWireless.Cursor = System.Windows.Forms.Cursors.Hand;
             resources.ApplyResources(this.cbxUseWireless, "cbxUseWireless");
             this.cbxUseWireless.Name = "cbxUseWireless";
@@ -218,35 +214,35 @@
             // 
             // linkSetPort
             // 
-            this.linkSetPort.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(155)))), ((int)(((byte)(40)))));
+            this.linkSetPort.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             resources.ApplyResources(this.linkSetPort, "linkSetPort");
-            this.linkSetPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkSetPort.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkSetPort.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkSetPort.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkSetPort.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkSetPort.Name = "linkSetPort";
             this.linkSetPort.Style = Sunny.UI.UIStyle.Custom;
             this.linkSetPort.TabStop = true;
             this.linkSetPort.UseCompatibleTextRendering = true;
-            this.linkSetPort.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.linkSetPort.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkSetPort.Click += new System.EventHandler(this.linkSetPort_Click);
             // 
             // linkEnabledADB
             // 
-            this.linkEnabledADB.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(155)))), ((int)(((byte)(40)))));
+            this.linkEnabledADB.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             resources.ApplyResources(this.linkEnabledADB, "linkEnabledADB");
-            this.linkEnabledADB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkEnabledADB.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkEnabledADB.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkEnabledADB.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkEnabledADB.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkEnabledADB.Name = "linkEnabledADB";
             this.linkEnabledADB.Style = Sunny.UI.UIStyle.Custom;
             this.linkEnabledADB.TabStop = true;
-            this.linkEnabledADB.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.linkEnabledADB.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkEnabledADB.Click += new System.EventHandler(this.linkEnabledADB_Click);
             // 
             // uiLabel1
             // 
             resources.ApplyResources(this.uiLabel1, "uiLabel1");
-            this.uiLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.uiLabel1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.uiLabel1.Name = "uiLabel1";
             this.uiLabel1.Style = Sunny.UI.UIStyle.Custom;
             this.uiLabel1.StyleCustomMode = true;
@@ -254,9 +250,9 @@
             // btnStart
             // 
             this.btnStart.Cursor = System.Windows.Forms.Cursors.Hand;
-            this.btnStart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(15)))), ((int)(((byte)(40)))), ((int)(((byte)(70)))));
-            this.btnStart.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(216)))), ((int)(((byte)(233)))), ((int)(((byte)(255)))));
-            this.btnStart.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(235)))), ((int)(((byte)(243)))), ((int)(((byte)(255)))));
+            this.btnStart.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
+            this.btnStart.FillHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
+            this.btnStart.FillPressColor = System.Drawing.Color.FromArgb(((int)(((byte)(30)))), ((int)(((byte)(64)))), ((int)(((byte)(175)))));
             resources.ApplyResources(this.btnStart, "btnStart");
             this.btnStart.ForeHoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
             this.btnStart.ForePressColor = System.Drawing.Color.FromArgb(((int)(((byte)(130)))), ((int)(((byte)(130)))), ((int)(((byte)(130)))));
@@ -274,14 +270,14 @@
             this.comboIp.FillColor = System.Drawing.Color.White;
             resources.ApplyResources(this.comboIp, "comboIp");
             this.comboIp.Name = "comboIp";
-            this.comboIp.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.comboIp.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.comboIp.Style = Sunny.UI.UIStyle.Custom;
             this.comboIp.TextAlignment = System.Drawing.ContentAlignment.MiddleLeft;
             this.comboIp.Watermark = "";
             // 
             // tabSetting
             // 
-            this.tabSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
+            this.tabSetting.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             this.tabSetting.Controls.Add(this.linkLang);
             this.tabSetting.Controls.Add(this.uiLabel6);
             this.tabSetting.Controls.Add(this.comboPx);
@@ -299,16 +295,16 @@
             // 
             // linkLang
             // 
-            this.linkLang.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(220)))), ((int)(((byte)(155)))), ((int)(((byte)(40)))));
+            this.linkLang.ActiveLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(29)))), ((int)(((byte)(78)))), ((int)(((byte)(216)))));
             resources.ApplyResources(this.linkLang, "linkLang");
-            this.linkLang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkLang.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkLang.LinkBehavior = System.Windows.Forms.LinkBehavior.HoverUnderline;
-            this.linkLang.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(48)))), ((int)(((byte)(48)))), ((int)(((byte)(48)))));
+            this.linkLang.LinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkLang.Name = "linkLang";
             this.linkLang.Style = Sunny.UI.UIStyle.Custom;
             this.linkLang.TabStop = true;
             this.linkLang.UseCompatibleTextRendering = true;
-            this.linkLang.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(80)))), ((int)(((byte)(80)))));
+            this.linkLang.VisitedLinkColor = System.Drawing.Color.FromArgb(((int)(((byte)(37)))), ((int)(((byte)(99)))), ((int)(((byte)(235)))));
             this.linkLang.Click += new System.EventHandler(this.linkLang_Click);
             // 
             // uiLabel6
@@ -391,7 +387,7 @@
             this.rbtnShortcuts.ItemSize = new System.Drawing.Size(100, 27);
             this.rbtnShortcuts.Name = "rbtnShortcuts";
             this.rbtnShortcuts.Radius = 10;
-            this.rbtnShortcuts.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.rbtnShortcuts.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.rbtnShortcuts.Style = Sunny.UI.UIStyle.Custom;
             // 
             // lbAllShortcut
@@ -412,7 +408,7 @@
             this.uiGroupBox1.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
             resources.ApplyResources(this.uiGroupBox1, "uiGroupBox1");
             this.uiGroupBox1.Name = "uiGroupBox1";
-            this.uiGroupBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.uiGroupBox1.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.uiGroupBox1.Style = Sunny.UI.UIStyle.Custom;
             // 
             // uiLabel4
@@ -462,7 +458,7 @@
             this.cbxOtherSetting.FillColor = System.Drawing.Color.FromArgb(((int)(((byte)(242)))), ((int)(((byte)(242)))), ((int)(((byte)(244)))));
             resources.ApplyResources(this.cbxOtherSetting, "cbxOtherSetting");
             this.cbxOtherSetting.Name = "cbxOtherSetting";
-            this.cbxOtherSetting.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.cbxOtherSetting.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.cbxOtherSetting.Style = Sunny.UI.UIStyle.Custom;
             // 
             // cbxAudioEnabled
@@ -572,7 +568,7 @@
             this.AcceptButton = this.btnStart;
             this.AllowShowTitle = false;
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.None;
-            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(246)))), ((int)(((byte)(247)))), ((int)(((byte)(248)))));
             resources.ApplyResources(this, "$this");
             this.Controls.Add(this.btnMini);
             this.Controls.Add(this.ledTitle);
@@ -580,14 +576,14 @@
             this.Controls.Add(this.navTab);
             this.MaximizeBox = false;
             this.Name = "Main";
-            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.RectColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.ShowIcon = true;
             this.ShowRadius = false;
             this.ShowShadow = true;
             this.ShowTitle = false;
             this.ShowTitleIcon = true;
             this.Style = Sunny.UI.UIStyle.Custom;
-            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(140)))), ((int)(((byte)(140)))), ((int)(((byte)(140)))));
+            this.TitleColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(231)))), ((int)(((byte)(233)))));
             this.TitleHeight = 63;
             this.navTab.ResumeLayout(false);
             this.tabHome.ResumeLayout(false);
@@ -603,7 +599,7 @@
         }
 
         #endregion
-        private Sunny.UI.UILedDisplay ledTitle;
+        private Sunny.UI.UILabel ledTitle;
         private System.Windows.Forms.ImageList navImgList;
         private Sunny.UI.UITabControlMenu navTab;
         private System.Windows.Forms.TabPage tabHome;

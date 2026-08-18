@@ -135,7 +135,7 @@
     <value>ledTitle</value>
   </data>
   <data name="&gt;&gt;ledTitle.Type" xml:space="preserve">
-    <value>Sunny.UI.UILedDisplay, SunnyUI, Version=3.0.3.0, Culture=neutral, PublicKeyToken=null</value>
+    <value>Sunny.UI.UILabel, SunnyUI, Version=3.0.3.0, Culture=neutral, PublicKeyToken=null</value>
   </data>
   <data name="&gt;&gt;ledTitle.Parent" xml:space="preserve">
     <value>$this</value>

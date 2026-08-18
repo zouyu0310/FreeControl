@@ -1,0 +1,8 @@
+<Project>
+  <PropertyGroup>
+    <!-- 修复 VS2026 / MSBuild 18 下 Fody 6.5.5 的 Fody.targets(37) 报错 MSB4086：
+         条件 $(MsBuildMajorVersion) < 16 在 MsBuildMajorVersion 偶发为空时无法做数值比较。
+         仅当该属性为空时兜底为 18（当前 MSBuild 主版本），不影响其他情况。 -->
+    <MsBuildMajorVersion Condition="'$(MsBuildMajorVersion)' == ''">18</MsBuildMajorVersion>
+  </PropertyGroup>
+</Project>
